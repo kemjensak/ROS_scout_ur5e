@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<robot name="joinedrobot" 
+  xmlns:xacro="http://wiki.ros.org/xacro">
+
+
+    <!-- include xacro file containing a link where you want to attach the manipulator -->
+    <xacro:include filename="$(find joined_scout_ur5e)/urdf/scout_v2.xacro"/>
+    <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro"/>
+    <xacro:include filename="$(find ur_e_description)/urdf/ur5e_robot.urdf.xacro"/>
+    
+    
+
+    
+
+    <link name="dual_world"/>
+    <link name="dual_base_link"/>
+    <joint name="dual_world" type="fixed">
+        <parent link="dual_world"/>
+        <child link="dual_base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+    <joint name="ur_world_joint" type="fixed">
+        <parent link="dual_base_link"/>
+        <child link="world"/>
+        <origin xyz="0 0 0.13" rpy="0 0 0" />
+    </joint>
+
+
+    <link name="scout_world"/>
+
+    <joint name="scout_world_joint" type="fixed">
+        <parent link="scout_world" />
+        <child link = "scout_base_link" />  <!--"r_base_link" is follow the prefix setting.-->
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+    <joint name="dual_base_joint" type="fixed">
+        <origin xyz = "0 0 0"/>
+        <parent link="dual_base_link"/>
+        <child link="scout_world"/>
+    </joint>
+    
+    <!--joint part-->
+    
+</robot>
