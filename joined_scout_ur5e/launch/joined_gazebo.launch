@@ -1,0 +1,69 @@
+<launch>
+    <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
+    <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
+    <arg name="gui" default="true" doc="Starts gazebo gui" />
+    <arg name="robot_namespace" default="/"/>
+    <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/>
+
+    <!-- startup simulated world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" default="$(arg world_name)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+    <!-- send robot urdf to param server -->
+    <!-- limits joint range [-PI, PI] on all joints. -->
+    <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+    <arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
+
+    <param unless="$(arg limited)" name="robot_description"
+        command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_UR5e.xacro'
+        transmission_hw_interface:=$(arg transmission_hw_interface)
+        kinematics_config:=$(arg kinematics_config)"
+    />
+    <param name="ur_robot_description"
+        command="$(find xacro)/xacro --inorder '$(find ur_e_description)/urdf/ur5e_joint_limited_robot.urdf.xacro'
+        transmission_hw_interface:=$(arg transmission_hw_interface)
+        kinematics_config:=$(arg kinematics_config)"
+    />
+    
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -unpause -param robot_description -model robot -z 0.3" respawn="false" output="screen" />
+
+    <!-- Robot state publisher, Fake Calibration, joint_state_controller -->
+    <!-- upload yaml files to rosparams for moveit! controllers -->
+    <!-- Robot state publisher -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" type="string" value="" />
+  </node>
+
+  <!-- Fake Calibration -->
+  <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
+        args="pub /calibrated std_msgs/Bool true" />
+  
+  <!-- joint_state_controller -->
+  <rosparam file="$(find ur_e_gazebo)/controller/joint_state_controller.yaml" command="load"/>
+  <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+  
+   <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find scout_gazebo_sim)/config/scout_v2_control.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="scout_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="scout_state_controller scout_motor_fr_controller scout_motor_fl_controller scout_motor_rl_controller scout_motor_rr_controller"/>
+    <!-- Annotated because ur_e_gazebo contorller_utils.launch has same node -->
+    <!-- <node name="scout_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+
+    <node name="scout_skid_steer_controller" pkg="scout_gazebo_sim" type="scout_skid_steer_controller">
+        <param name="robot_namespace" type="string" value="$(arg robot_namespace)" />
+    </node>
+
+    <!-- start this controller -->
+    <rosparam file="$(find ur_e_gazebo)/controller/arm_controller_ur5e.yaml" command="load"/>  <!-- controller settings -->
+    <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
+
+    <!-- load other controllers -->
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
+
+</launch>
