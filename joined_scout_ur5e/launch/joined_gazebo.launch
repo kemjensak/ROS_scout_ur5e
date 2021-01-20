@@ -17,8 +17,8 @@
     <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
     <arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
 
-    <param unless="$(arg limited)" name="robot_description"
-        command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_UR5e.xacro'
+    <param name="robot_description"
+        command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_v2.xacro'
         transmission_hw_interface:=$(arg transmission_hw_interface)
         kinematics_config:=$(arg kinematics_config)"
     />
@@ -33,24 +33,26 @@
 
     <!-- Robot state publisher, Fake Calibration, joint_state_controller -->
     <!-- upload yaml files to rosparams for moveit! controllers -->
-    <!-- Robot state publisher -->
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="50.0" />
-    <param name="tf_prefix" type="string" value="" />
-  </node>
 
-  <!-- Fake Calibration -->
-  <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
+    <!-- Robot state publisher -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" type="string" value="" />
+    </node>
+
+
+    <!-- Fake Calibration -->
+    <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
         args="pub /calibrated std_msgs/Bool true" />
   
-  <!-- joint_state_controller -->
-  <rosparam file="$(find ur_e_gazebo)/controller/joint_state_controller.yaml" command="load"/>
-  <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
+    <!-- ur_joint_state_controller configurations -->
+    <rosparam file="$(find ur_e_gazebo)/controller/joint_state_controller.yaml" command="load"/>
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
   
-   <!-- Load joint controller configurations from YAML file to parameter server -->
+    <!-- Load scout_joint_controller configurations from YAML file to parameter server -->
     <rosparam file="$(find scout_gazebo_sim)/config/scout_v2_control.yaml" command="load"/>
 
-    <!-- load the controllers -->
+    <!-- load scout_controllers -->
     <node name="scout_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="scout_state_controller scout_motor_fr_controller scout_motor_fl_controller scout_motor_rl_controller scout_motor_rr_controller"/>
     <!-- Annotated because ur_e_gazebo contorller_utils.launch has same node -->
     <!-- <node name="scout_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
@@ -60,10 +62,14 @@
     </node>
 
     <!-- start this controller -->
-    <rosparam file="$(find ur_e_gazebo)/controller/arm_controller_ur5e.yaml" command="load"/>  <!-- controller settings -->
+    <rosparam file="$(find joined_scout_ur5e)/controller/arm_controller_ur5e.yaml" command="load"/>  <!-- controller settings -->
     <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
 
     <!-- load other controllers -->
-    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />    
+    
+    <!-- load rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" />
+    <include file="$(find scout_base)/launch/scout_base_sim.launch" />
 
 </launch>

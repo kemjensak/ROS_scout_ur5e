@@ -5,51 +5,21 @@
 
 
     <!-- include xacro file containing a link where you want to attach the manipulator -->
-    <xacro:include filename="$(find joined_scout_ur5e)/urdf/scout_v2.xacro"/>
+    <xacro:include filename="$(find scout_description)/urdf/scout_v2.xacro"/>
     <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
     <!-- ur5e -->
     <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
     <!-- arm -->
     <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
-    <xacro:ur5e_robot prefix="" joint_limited="true"
+    <xacro:ur5e_robot prefix="ur_" joint_limited="true"
     kinematics_file="${load_yaml('$(arg kinematics_config)')}"
     />
 
-    <link name="dual_world"/>
-    <link name="dual_base_link"/>
-    <joint name="dual_world" type="fixed">
-        <parent link="dual_world"/>
-        <child link="dual_base_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-    </joint>
 
-    <link name="ur_world" />
-    <joint name="ur_world_joint" type="fixed">
-        <parent link="ur_world" />
-        <child link = "base_link" />
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-    </joint>
-
-    <link name="scout_world"/>
-    <joint name="scout_world_joint" type="fixed">
-        <parent link="scout_world" />
-        <child link = "scout_base_link" />  <!--"r_base_link" is follow the prefix setting.-->
-        <origin xyz="0 0 0" rpy="0 0 0" />
-    </joint>
-    
-
-    
-
-    <joint name="ur_joint" type="fixed">
-        <parent link="dual_base_link"/>
-        <child link="ur_world"/>
-        <origin xyz="0 0 0.13" rpy="0 0 0" />
-    </joint>
-
-    <joint name="scout_joint" type="fixed">
-        <parent link="dual_base_link"/>
-        <child link="scout_world"/>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+    <joint name="dual_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="ur_base_link"/>
+        <origin xyz="0 0 0.20" rpy="0 0 0" />
     </joint>
 
 
