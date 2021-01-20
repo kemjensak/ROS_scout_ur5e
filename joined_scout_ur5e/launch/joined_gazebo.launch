@@ -18,7 +18,7 @@
     <arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
 
     <param name="robot_description"
-        command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_v2.xacro'
+        command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_UR5e.xacro'
         transmission_hw_interface:=$(arg transmission_hw_interface)
         kinematics_config:=$(arg kinematics_config)"
     />
@@ -39,6 +39,8 @@
         <param name="publish_frequency" type="double" value="50.0" />
         <param name="tf_prefix" type="string" value="" />
     </node>
+
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
 
 
     <!-- Fake Calibration -->

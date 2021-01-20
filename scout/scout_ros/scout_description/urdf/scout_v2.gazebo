@@ -12,7 +12,7 @@ Reference:
     <xacro:include filename="$(find scout_description)/urdf/scout_wheel.gazebo" />
 
     <!-- Additional definitions for simulation -->
-    <!-- <gazebo reference="base_link">
+    <!-- <gazebo reference="scout_base_link">
         <material>Gazebo/Grey</material>
     </gazebo> -->
 
@@ -50,7 +50,7 @@ Reference:
             <rightRearJoint>rear_right_wheel</rightRearJoint>
             <wheelSeparation>4</wheelSeparation>
             <wheelDiameter>0.32918</wheelDiameter>
-            <robotBaseFrame>base_link</robotBaseFrame>
+            <robotBaseFrame>scout_base_link</robotBaseFrame>
             <torque>1000</torque>
             <commandTopic>cmd_vel</commandTopic>
             <broadcastTF>true</broadcastTF>
