@@ -15,7 +15,12 @@
     kinematics_file="${load_yaml('$(arg kinematics_config)')}"
     />
 
-   
+    <link name="world"/>
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="scout_base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
 
     <joint name="joined_joint" type="fixed">
         <parent link="scout_base_link"/>
