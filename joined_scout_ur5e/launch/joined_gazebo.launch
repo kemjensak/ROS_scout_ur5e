@@ -23,7 +23,7 @@
         kinematics_config:=$(arg kinematics_config)"
     />
     <param name="ur_robot_description"
-        command="$(find xacro)/xacro --inorder '$(find ur_e_description)/urdf/ur5e_robot.urdf.xacro'
+        command="$(find xacro)/xacro --inorder '$(find ur_e_description)/urdf/ur5e.urdf.xacro'
         transmission_hw_interface:=$(arg transmission_hw_interface)
         kinematics_config:=$(arg kinematics_config)"
     />

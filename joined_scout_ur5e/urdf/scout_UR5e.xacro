@@ -8,13 +8,14 @@
     <xacro:include filename="$(find joined_scout_ur5e)/urdf/scout_v2.xacro"/>
     <!-- ur5e -->
     <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
+    <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
     <!-- arm -->
     <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
 
     <xacro:ur5e_robot prefix="" joint_limited="true" kinematics_file="${load_yaml('$(arg kinematics_config)')}"/>   
   
     <link name="world"/>
-    <joint name="world_joint" type="fixed">
+    <joint name="world_joint" type="floating">
         <parent link="world"/>
         <child link="scout_base_link"/>
         <origin xyz="0 0 0" rpy="0 0 0" />
