@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: joined_scout_ur5e
+    relative_path: urdf/scout_UR5e.xacro
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/joinedrobot.srdf
+  CONFIG:
+    author_name: kjs
+    author_email: kjs@kjs.com
+    generated_timestamp: 1611302795

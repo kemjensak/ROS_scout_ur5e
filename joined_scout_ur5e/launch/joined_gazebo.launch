@@ -4,6 +4,7 @@
     <arg name="gui" default="true" doc="Starts gazebo gui" />
     <arg name="robot_namespace" default="/"/>
     <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/>
+    <!-- <arg name="world_name" default="worlds/empty.world"/> -->
 
     <!-- startup simulated world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -34,13 +35,7 @@
     <!-- Robot state publisher, Fake Calibration, joint_state_controller -->
     <!-- upload yaml files to rosparams for moveit! controllers -->
 
-    <!-- Robot state publisher -->
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="50.0" />
-        <param name="tf_prefix" type="string" value="" />
-    </node>
-
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+   
 
 
     <!-- Fake Calibration -->
@@ -50,25 +45,31 @@
     <!-- ur_joint_state_controller configurations -->
     <rosparam file="$(find ur_e_gazebo)/controller/joint_state_controller.yaml" command="load"/>
     <node name="joint_state_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn joint_state_controller" respawn="false" output="screen"/>
-  
-    <!-- Load scout_joint_controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find scout_gazebo_sim)/config/scout_v2_control.yaml" command="load"/>
-
-    <!-- load scout_controllers -->
-    <node name="scout_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="scout_state_controller scout_motor_fr_controller scout_motor_fl_controller scout_motor_rl_controller scout_motor_rr_controller"/>
-    <!-- Annotated because ur_e_gazebo contorller_utils.launch has same node -->
-    <!-- <node name="scout_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
-
-    <node name="scout_skid_steer_controller" pkg="scout_gazebo_sim" type="scout_skid_steer_controller">
-        <param name="robot_namespace" type="string" value="$(arg robot_namespace)" />
-    </node>
-
     <!-- start this controller -->
     <rosparam file="$(find joined_scout_ur5e)/controller/arm_controller_ur5e.yaml" command="load"/>  <!-- controller settings -->
     <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
 
     <!-- load other controllers -->
-    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />    
+    <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
+
+
+
+    <!-- Load scout_joint_controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find scout_gazebo_sim)/config/scout_v2_control.yaml" command="load"/>
+    <node name="scout_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="scout_state_controller scout_motor_fr_controller scout_motor_fl_controller scout_motor_rl_controller scout_motor_rr_controller"/>
+    
+    <node name="scout_skid_steer_controller" pkg="scout_gazebo_sim" type="scout_skid_steer_controller">
+        <param name="robot_namespace" type="string" value="$(arg robot_namespace)" />
+    </node>
+
+     <!-- Robot state publisher -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0" />
+        <param name="tf_prefix" type="string" value="" />
+    </node>
+
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+        
     
     <!-- load rviz -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" />
