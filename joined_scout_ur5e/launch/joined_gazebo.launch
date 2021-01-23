@@ -14,7 +14,6 @@
     </include>
 
     <!-- send robot urdf to param server -->
-    <!-- limits joint range [-PI, PI] on all joints. -->
     <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
     <arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
 
@@ -23,20 +22,9 @@
         transmission_hw_interface:=$(arg transmission_hw_interface)
         kinematics_config:=$(arg kinematics_config)"
     />
-    <param name="ur_robot_description"
-        command="$(find xacro)/xacro --inorder '$(find ur_e_description)/urdf/ur5e.urdf.xacro'
-        transmission_hw_interface:=$(arg transmission_hw_interface)
-        kinematics_config:=$(arg kinematics_config)"
-    />
     
-    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <!--spawn robot in gazebo -->
     <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -unpause -param robot_description -model robot -z 0.3" respawn="false" output="screen" />
-
-    <!-- Robot state publisher, Fake Calibration, joint_state_controller -->
-    <!-- upload yaml files to rosparams for moveit! controllers -->
-
-   
-
 
     <!-- Fake Calibration -->
     <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
@@ -51,8 +39,6 @@
 
     <!-- load other controllers -->
     <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
-
-
 
     <!-- Load scout_joint_controller configurations from YAML file to parameter server -->
     <rosparam file="$(find scout_gazebo_sim)/config/scout_v2_control.yaml" command="load"/>
