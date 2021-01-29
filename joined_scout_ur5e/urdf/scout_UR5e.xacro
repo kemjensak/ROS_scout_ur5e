@@ -3,9 +3,11 @@
 <robot name="joinedrobot" 
   xmlns:xacro="http://wiki.ros.org/xacro">
 
+    <xacro:arg name="robot_namespace" default="" />
 
-    <!-- include xacro file containing a link where you want to attach the manipulator -->
-    <xacro:include filename="$(find joined_scout_ur5e)/urdf/scout_v2.xacro"/>
+    <!-- scout 2.0 -->
+    <xacro:include filename="$(find scout_description)/urdf/scout_v2.xacro"/>
+        
     <!-- ur5e -->
     <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" />
     
@@ -15,10 +17,18 @@
     <xacro:ur5e_robot prefix="$(arg prefix)" joint_limited="true" kinematics_file="${load_yaml('$(arg kinematics_config)')}"/>   
   
     <link name="world"/>
-    <joint name="world_joint" type="floating">
+
+    <!-- <joint name="world_odom" type="fixed">
+        <parent link="world"/>
+        <child link="odom"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint> -->
+
+    <joint name="world_joint" type="prismatic">
         <parent link="world"/>
         <child link="base_link"/>
         <origin xyz="0 0 0" rpy="0 0 0" />
+         <dynamics damping="0.1" friction="10.0"/>
     </joint>
 
 
@@ -28,7 +38,4 @@
         <origin xyz="0 0 0.13" rpy="0 0 0" />
     </joint>
 
-
-    
-    
 </robot>

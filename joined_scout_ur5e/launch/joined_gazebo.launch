@@ -54,11 +54,12 @@
         <param name="tf_prefix" type="string" value="" />
     </node>
 
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+    <!-- <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/> -->
         
     
     <!-- load rviz -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" />
     <include file="$(find scout_base)/launch/scout_base_sim.launch" />
-
+    <node name="teleop_keybord" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen">
+    </node>
 </launch>
