@@ -2,9 +2,9 @@
     <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
     <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
     <arg name="gui" default="true" doc="Starts gazebo gui" />
-    <arg name="robot_namespace" default="/"/>
-    <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/>
-    <!-- <arg name="world_name" default="worlds/empty.world"/> -->
+    <arg name="robot_namespace" default=""/>
+    <!-- <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/> -->
+    <arg name="world_name" default="worlds/empty.world"/>
 
     <!-- startup simulated world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
