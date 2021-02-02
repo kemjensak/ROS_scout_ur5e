@@ -36,7 +36,6 @@
         <parent link="base_link"/>
         <child link="$(arg prefix)base_link"/>
         <origin xyz="0 0 0.13" rpy="0 0 0" />
-        
     </joint>
 
 </robot>

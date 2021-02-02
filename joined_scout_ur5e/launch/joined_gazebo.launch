@@ -3,8 +3,10 @@
     <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
     <arg name="gui" default="true" doc="Starts gazebo gui" />
     <arg name="robot_namespace" default=""/>
-    <!-- <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/> -->
-    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/>
+    <arg name="sim" default="true"/>
+    <arg name="config" default="true"/>
+    <!-- <arg name="world_name" default="worlds/empty.world"/> -->
 
     <!-- startup simulated world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -60,6 +62,33 @@
     <!-- load rviz -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" />
     <include file="$(find scout_base)/launch/scout_base_sim.launch" />
+
+    <!-- load motion planner -->
+    <include file="$(find ur_joined_moveit_config)/launch/joinedrobot_moveit_planning_execution.launch">
+        <arg name="sim" default="$(arg sim)"/>
+    </include>
+
+     <include file="$(find ur_joined_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="config" default="$(arg config)"/>
+    </include>
+
+    <!-- <node pkg="rostopic" type="rostopic" name="initial_joint_commander"
+        args="pub /arm_controller/command trajectory_msgs/JointTrajectory  
+        header:
+        seq: 0
+        stamp:
+            secs: 0
+            nsecs: 0
+        frame_id: ''
+        joint_names:
+        - ''
+        points:
+        - positions: [0]
+        velocities: [0]
+        accelerations: [0]
+        effort: [0]
+        time_from_start: {secs: 0, nsecs: 0}" /> -->
+
     <node name="teleop_keybord" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen">
     </node>
 </launch>
