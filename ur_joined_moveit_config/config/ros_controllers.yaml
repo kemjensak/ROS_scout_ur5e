@@ -9,17 +9,17 @@ generic_hw_control_loop:
 # Settings for ros_control hardware interface
 hardware_interface:
   joints:
-    - world_joint
+    - virtual_joint
     - front_left_wheel
     - front_right_wheel
+    - rear_left_wheel
+    - rear_right_wheel
     - arm_shoulder_pan_joint
     - arm_shoulder_lift_joint
     - arm_elbow_joint
     - arm_wrist_1_joint
     - arm_wrist_2_joint
     - arm_wrist_3_joint
-    - rear_left_wheel
-    - rear_right_wheel
   sim_control_mode: 1  # 0: position, 1: velocity
 # Publish all joint states
 # Creates the /joint_states topic necessary in ROS

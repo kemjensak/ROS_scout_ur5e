@@ -2,11 +2,13 @@
     <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />
     <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
     <arg name="gui" default="true" doc="Starts gazebo gui" />
-    <arg name="robot_namespace" default=""/>
-    <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/>
+    <arg name="robot_namespace" default="/"/>
+    <!-- <arg name="world_name" default="$(find scout_gazebo_sim)worlds/AGX_ROBOT.world"/> -->
+    <!-- <arg name="world_name" default="$(find joined_scout_ur5e)worlds/test_constructa.world"/> -->
+    <arg name="world_name" default="worlds/empty.world"/>
     <arg name="sim" default="true"/>
     <arg name="config" default="true"/>
-    <!-- <arg name="world_name" default="worlds/empty.world"/> -->
+    
 
     <!-- startup simulated world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -21,12 +23,11 @@
 
     <param name="robot_description"
         command="$(find xacro)/xacro --inorder '$(find joined_scout_ur5e)/urdf/scout_UR5e.xacro'
-        transmission_hw_interface:=$(arg transmission_hw_interface)
-        kinematics_config:=$(arg kinematics_config)"
+       "
     />
     
     <!--spawn robot in gazebo -->
-    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -unpause -param robot_description -model robot -z 0.3" respawn="false" output="screen" />
+    <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -unpause -param robot_description -model robot -z 0.2" respawn="false" output="screen" />
 
     <!-- Fake Calibration -->
     <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
@@ -60,7 +61,7 @@
         
     
     <!-- load rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" />
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/navigation.rviz" /> -->
     <include file="$(find scout_base)/launch/scout_base_sim.launch" />
 
     <!-- load motion planner -->
@@ -72,22 +73,6 @@
         <arg name="config" default="$(arg config)"/>
     </include>
 
-    <!-- <node pkg="rostopic" type="rostopic" name="initial_joint_commander"
-        args="pub /arm_controller/command trajectory_msgs/JointTrajectory  
-        header:
-        seq: 0
-        stamp:
-            secs: 0
-            nsecs: 0
-        frame_id: ''
-        joint_names:
-        - ''
-        points:
-        - positions: [0]
-        velocities: [0]
-        accelerations: [0]
-        effort: [0]
-        time_from_start: {secs: 0, nsecs: 0}" /> -->
 
     <node name="teleop_keybord" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen">
     </node>

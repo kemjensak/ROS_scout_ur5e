@@ -3,7 +3,7 @@
 <robot name="scout_v2" 
     xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:arg name="robot_namespace" default="" />
+    <xacro:arg name="robot_namespace" default="/" />
     <!--xacro:arg name="urdf_extras" default="$(find scout_description)/urdf/empty.urdf" /-->
 
     <xacro:include filename="$(find scout_description)/urdf/scout_wheel_type1.xacro" />
@@ -54,7 +54,7 @@
 
     <link name="inertial_link">
         <inertial>
-            <mass value="4000" />
+            <mass value="40" />
             <!-- <mass value="50" /> -->
             <!-- <origin xyz="-0.00065 -0.085 0.062" />
             <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296" /> -->

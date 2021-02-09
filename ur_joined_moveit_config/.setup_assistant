@@ -8,4 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: kjs
     author_email: kjs@kjs.com
-    generated_timestamp: 1611302795
+    generated_timestamp: 1612271302
