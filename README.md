@@ -8,6 +8,7 @@ joined scout2.0 mobile platform and UR5e manipulator
 	  - https://dof.robotiq.com/discussion/1914/robotiq-gripper-with-ur5-cb3-thru-wrist-connector
 	   - https://dof.robotiq.com/discussions/tagged/Other-ROS/p1
 	   - https://dof.robotiq.com/discussion/1988/robotiq-2f-grippers-with-universal-robot-ros-driver
+	   - [UR_driver's feature(testing)](https://github.com/kemjensak/joined_souct_ur5e/blob/master/Universal_Robots_ROS_Driver/ur_robot_driver/doc/setup_tool_communication.md)
 
  2. Configure moveit! package with 2F-85
  3. Find out causes of UR's jitter on gazebo
