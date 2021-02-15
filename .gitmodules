@@ -15,3 +15,7 @@
 [submodule "robotiq"]
 	path = robotiq
 	url = https://github.com/ros-industrial/robotiq.git
+[submodule "ros_canopen"]
+	path = ros_canopen
+	url = https://github.com/ros-industrial/ros_canopen.git
+	branch = kinetic-devel
