@@ -1,3 +1,11 @@
 [submodule "Universal_Robots_ROS_Driver"]
 	path = Universal_Robots_ROS_Driver
 	url = https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git
+[submodule "agx_sdk"]
+	path = agx_sdk
+	url = https://github.com/agilexrobotics/agx_sdk.git
+	branch = scout_v2
+[submodule "scout_ros"]
+	path = scout_ros
+	url = https://github.com/agilexrobotics/scout_ros.git
+	branch = scout_v2
