@@ -1,5 +1,22 @@
+
 # joined_souct_ur5e
 joined scout2.0 mobile platform and UR5e manipulator
+
+
+## Installation
+On Ubuntu bionic, ROS melodic 
+
+    git clone https://github.com/kemjensak/joined_souct_ur5e.git
+
+Move **packages in joined_souct_ur5e** to ***catkin_ws/src***
+
+    git submodule init
+    git submodule update
+
+And follow instructions of each package
+
+
+
 ## To do list
 
  1. Communicate(or control) with (***wrist connected***)2F-85 Gripper through ROS
