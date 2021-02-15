@@ -18,4 +18,4 @@
 [submodule "ros_canopen"]
 	path = ros_canopen
 	url = https://github.com/ros-industrial/ros_canopen.git
-	branch = kinetic-devel
+	branch = melodic-devel
