@@ -1,9 +1,0 @@
-<launch>
-    <include file="$(find joined_scout_ur5e)/launch/scout_empty_world.launch" />
-    <include file="$(find joined_scout_ur5e)/launch/scout_base_sim.launch" />
-    <!-- start this controller -->
-    <rosparam file="$(find ur_e_gazebo)/controller/arm_controller_ur5e.yaml" command="load"/>
-    <node name="arm_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_controller" respawn="false" output="screen"/>
-
-    
-</launch>
