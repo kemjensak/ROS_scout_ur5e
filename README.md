@@ -7,9 +7,6 @@ joined scout2.0 mobile platform and UR5e manipulator
 On Ubuntu bionic, ROS melodic 
 
     git clone https://github.com/kemjensak/joined_souct_ur5e.git
-
-
-
     git submodule init
     git submodule update
 
