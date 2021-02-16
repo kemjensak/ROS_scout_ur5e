@@ -8,11 +8,12 @@ On Ubuntu bionic, ROS melodic
 
     git clone https://github.com/kemjensak/joined_souct_ur5e.git
 
-Move **packages in joined_souct_ur5e** to ***catkin_ws/src***
+
 
     git submodule init
     git submodule update
 
+Move **packages in joined_souct_ur5e** to ***catkin_ws/src***
 And follow instructions of each package
 
 
