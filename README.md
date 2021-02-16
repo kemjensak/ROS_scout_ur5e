@@ -8,7 +8,8 @@ On Ubuntu bionic, ROS melodic
 
     git clone https://github.com/kemjensak/joined_souct_ur5e.git
     
-Move **packages in joined_souct_ur5e** to ***catkin_ws/src***
+Move **ALL FILES(including hidden files) in joined_souct_ur5e** to ***catkin_ws/src***
+(or just cd joined_scout_ur5e)
 
     git submodule init
     git submodule update
