@@ -7,6 +7,8 @@ joined scout2.0 mobile platform and UR5e manipulator
 On Ubuntu bionic, ROS melodic 
 
     git clone https://github.com/kemjensak/joined_souct_ur5e.git
+    or (to clone with submodules)
+    git clone --recurse-submodules https://github.com/kemjensak/joined_souct_ur5e.git
     
 Move **ALL FILES(including hidden files) in joined_souct_ur5e** to ***catkin_ws/src***
 
