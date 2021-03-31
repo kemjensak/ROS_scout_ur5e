@@ -12,3 +12,7 @@
 [submodule "robotiq"]
 	path = robotiq
 	url = https://github.com/ros-industrial/robotiq.git
+[submodule "universal_robot"]
+	path = universal_robot
+	url = https://github.com/fmauch/universal_robot.git
+	branch = calibration_devel
