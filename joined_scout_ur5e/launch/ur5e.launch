@@ -2,18 +2,19 @@
 
     <include file="$(find ur_robot_driver)/launch/ur5e_bringup.launch" >
         <!-- <remap from="/joint_states" to="/ur_joint_states"/> -->
-        <arg name = "robot_ip" default = "192.168.0.35" />
+        <arg name = "robot_ip" default = "192.168.1.2" />
         <arg name = "limited" default = "true" />
     </include>
     
-    <include file="$(find ur5_e_moveit_config)/launch/ur5_e_moveit_planning_execution.launch" ></include>
+    <arg name="sim" default="false" />
+    <arg name="limited" default="true"/>
+    <arg name="debug" default="false" />
 
+  
 
     <include file="$(find ur5_e_moveit_config)/launch/moveit_rviz.launch" >
         <!-- <remap from="/joint_states" to="/ur_joint_states"/> -->
         <arg name = "config" default = "true" />
     </include>
-    <!-- <arg name = "model_xacro" default = "$(find joined_scout_ur5e)/urdf/scout_UR5e.xacro" /> -->
-
    
 </launch>
