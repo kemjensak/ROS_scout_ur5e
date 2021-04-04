@@ -16,7 +16,7 @@ Move **ALL FILES(including hidden files) in joined_scout_ur5e** to ***catkin_ws/
     git submodule update
 
 
-And follow instructions of each package
+**And follow instructions of each package**
 
 
 
