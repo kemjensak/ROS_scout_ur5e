@@ -10,7 +10,7 @@ On Ubuntu bionic, ROS melodic
     or (to clone with submodules)
     git clone --recurse-submodules https://github.com/kemjensak/joined_souct_ur5e.git
     
-Move **ALL FILES(including hidden files) in joined_souct_ur5e** to ***catkin_ws/src***
+Move **ALL FILES(including hidden files) in joined_scout_ur5e** to ***catkin_ws/src***
 
     git submodule init
     git submodule update
@@ -41,3 +41,6 @@ And follow instructions of each package
 ## Changelog
 2021/01/29
  -  Added 2F-85 gripper package
+
+2021/04/04
+ -  Added moveit_test.py to control ur5e through imu data
