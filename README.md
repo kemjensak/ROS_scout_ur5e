@@ -43,4 +43,4 @@ And follow instructions of each package
  -  Added 2F-85 gripper package
 
 2021/04/04
- -  Added moveit_test.py to control ur5e through imu data
+ -  Added moveit_test.py to control UR5E through IMU data
