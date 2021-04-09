@@ -1,5 +1,6 @@
 
-# joined_souct_ur5e
+
+# joined_scout_ur5e
 joined scout2.0 mobile platform and UR5e manipulator
 
 
@@ -22,7 +23,7 @@ And follow instructions of each package
 
 ## To do list
 
- 0. Configure ur_joined_moveit_config package with robotiq 2F-85 and realsense D455(attached to gripper)
+ 0. Configure ur_joined_moveit_config package with ~~*robotiq 2F-85 and*(*DONE*)~~ realsense D455(attached to gripper)
  1. Communicate(or control) with (***wrist connected***)2F-85 Gripper through ROS
 	 - https://dof.robotiq.com/discussion/1362/wrist-camera-and-2-finger-gripper-in-ros-moveit-and-gazebo?_ga=2.203114449.1961611014.1611926640-791306080.1611816457
 	  - https://dof.robotiq.com/discussion/1671/how-do-you-control-the-2f-gripper-using-ros-if-its-connected-to-a-ur5e-robot
@@ -44,3 +45,8 @@ And follow instructions of each package
 
 2021/04/04
  -  Added moveit_test.py to control UR5E through IMU data
+
+2021/04/10
+ -  Added cmd_ur5e.msg (IMU's mode and distance data)
+ -  Added ur_2f_moveit_config (only for arm, grasping controller will be added)
+	 
