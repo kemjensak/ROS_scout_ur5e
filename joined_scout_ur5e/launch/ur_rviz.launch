@@ -1,0 +1,8 @@
+<launch>
+
+    <include file="$(find ur5_e_moveit_config)/launch/moveit_rviz.launch" >
+        <!-- <remap from="/joint_states" to="/ur_joint_states"/> -->
+        <arg name = "config" default = "true" />
+    </include>
+   
+</launch>
