@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<robot name="ur5e_2f-85" 
+  xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:arg name="robot_namespace" default="/" />
+
+    <!-- 2f-85 -->
+    <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
+    <xacro:robotiq_arg2f_85 prefix=""/>
+        
+    <!-- ur5e -->
+    <!-- <xacro:include filename="$(find ur_e_description)/urdf/ur5e.urdf.xacro" /> -->
+    <xacro:include filename="$(find joined_scout_ur5e)/urdf/ur5e.urdf.xacro" />
+    
+    <!-- arm -->
+    <xacro:include filename="$(find ur_e_description)/urdf/common.gazebo.xacro" />
+    <xacro:arg name="kinematics_config" default="$(find ur_e_description)/config/ur5e_default.yaml"/>
+    <xacro:arg name="prefix" default="arm_"/>
+    <xacro:ur5e_robot prefix="$(arg prefix)" joint_limited="true" kinematics_file="${load_yaml('$(arg kinematics_config)')}"/>   
+    
+    <link name="world"/>
+    
+    <joint name="ur_world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="$(arg prefix)base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 1.57" />
+    </joint>
+
+    <joint name="ur_2f-85_joint" type="fixed">
+        <parent link="$(arg prefix)tool0"/>
+        <child link="robotiq_arg2f_base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 1.57" />
+    </joint>
+
+
+
+
+</robot>

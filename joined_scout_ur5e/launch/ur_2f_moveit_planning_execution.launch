@@ -1,0 +1,11 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="debug" default="false" />
+    
+  <remap from="/follow_joint_trajectory" to="/scaled_pos_joint_traj_controller/follow_joint_trajectory"/>
+  
+  <!-- Launch moveit -->
+  <include file="$(find ur_2f_moveit_config)/launch/move_group.launch">
+    <arg name="debug" default="$(arg debug)" />
+  </include>
+</launch>

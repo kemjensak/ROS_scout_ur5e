@@ -7,9 +7,15 @@ import moveit_msgs.msg
 import geometry_msgs.msg
 import copy
 from math import pi
+from math import tan
 from std_msgs.msg import String
 from std_msgs.msg import Int32
 from moveit_commander.conversions import pose_to_list
+from joined_scout_ur5e.msg import cmd_ur5e
+
+scale = 1
+wrist_to_imu = 0.06
+wrist_to_fingertip = 0.2
 
 moveit_commander.roscpp_initialize(sys.argv)
 rospy.init_node('moveit_test', anonymous=True)
@@ -19,49 +25,50 @@ scene = moveit_commander.PlanningSceneInterface()
 
 group_name = robot.get_group_names()
 print(group_name)
-group = moveit_commander.MoveGroupCommander(group_name[1])
+group = moveit_commander.MoveGroupCommander(group_name[0])
 
 def CartesianMoveCallback(data):
-    rospy.loginfo(rospy.get_caller_id() + "cmd_ur5e Input mode %s", data.data)
-    #rospy.loginfo(rospy.get_caller_id() + "cmd_ur5e Input distance %d", data)
-    scale = 0.4
+    rospy.loginfo(rospy.get_caller_id() + "cmd_ur5e Input mode %s", data.mode)
+    rospy.loginfo(rospy.get_caller_id() + "cmd_ur5e Input distance %d", data.dist)
+    
     waypoints = []
-
+    
     wpose = group.get_current_pose().pose
-
     joint_goal = group.get_current_joint_values()
+
+    target_val = wrist_to_fingertip * tan(data.dist / wrist_to_imu)
 
     # for safety in test
     if (wpose.position.z < 0.6):
-        group.set_named_target('up')
+        group.set_named_target('test')
         plan = group.plan()
         rospy.sleep(2)
         group.execute(plan, wait=True)
         wpose = group.get_current_pose().pose
         
-    if data.data == 1:
-        wpose.position.y -= scale * 0.1  
+    if data.mode == 1:
+        wpose.position.y -= scale * target_val  
         waypoints.append(copy.deepcopy(wpose))
 
-    elif data.data == 2:
-        wpose.position.y += scale * 0.1 
+    elif data.mode == 2:
+        wpose.position.y += scale * target_val
         waypoints.append(copy.deepcopy(wpose))
 
-    elif data.data == 3:
-        wpose.position.z += scale * 0.1 
+    elif data.mode == 3:
+        wpose.position.z += scale * target_val 
         waypoints.append(copy.deepcopy(wpose))
 
-    elif data.data == 4:
-        wpose.position.z -= scale * 0.1 
+    elif data.mode == 4:
+        wpose.position.z -= scale * target_val 
         waypoints.append(copy.deepcopy(wpose))
 
-    elif data.data == 5:
-        joint_goal[5] += scale * 0.1
+    elif data.mode == 5:
+        joint_goal[5] += scale * target_val
         group.go(joint_goal, wait=True)
         return()
 
-    elif data.data == 6:
-        joint_goal[5] -= scale * 0.1
+    elif data.mode == 6:
+        joint_goal[5] -= scale * target_val
         group.go(joint_goal, wait=True)
         return()
 
@@ -100,7 +107,7 @@ def cartesian_move_test():
                                                 moveit_msgs.msg.DisplayTrajectory,
                                                 queue_size=20)
 
-    rospy.Subscriber("cmd_ur5e", Int32, CartesianMoveCallback)
+    rospy.Subscriber("cmd_ur5e", cmd_ur5e, CartesianMoveCallback)
 
 
     rospy.spin()

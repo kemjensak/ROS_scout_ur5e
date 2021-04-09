@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/irol/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/irol/catkin_ws/src/Universal_Robots_ROS_Driver/controller_stopper/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_2f_gripper_action_server/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_2f_gripper_control/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_3f_gripper_articulated_gazebo_plugins/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_3f_gripper_control/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_ethercat/include/**",
+        "/home/irol/catkin_ws/src/robotiq/robotiq_ft_sensor/include/**",
+        "/home/irol/catkin_ws/src/scout_ros/scout_base/include/**",
+        "/home/irol/catkin_ws/src/scout_ros/scout_gazebo_sim/include/**",
+        "/home/irol/catkin_ws/src/scout_ros/scout_webots_sim/include/**",
+        "/home/irol/catkin_ws/src/Universal_Robots_ROS_Driver/ur_calibration/include/**",
+        "/home/irol/catkin_ws/src/Universal_Robots_ROS_Driver/ur_controllers/include/**",
+        "/home/irol/catkin_ws/src/universal_robot/ur_kinematics/include/**",
+        "/home/irol/catkin_ws/src/Universal_Robots_ROS_Driver/ur_robot_driver/include/**",
+        "/home/irol/catkin_ws/src/agx_sdk/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
