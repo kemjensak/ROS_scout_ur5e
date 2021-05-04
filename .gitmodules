@@ -16,3 +16,6 @@
 	path = universal_robot
 	url = https://github.com/fmauch/universal_robot.git
 	branch = calibration_devel
+[submodule "ugv_sdk"]
+	path = ugv_sdk
+	url = https://github.com/westonrobot/ugv_sdk.git
