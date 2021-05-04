@@ -5,10 +5,6 @@
 	path = agx_sdk
 	url = https://github.com/agilexrobotics/agx_sdk.git
 	branch = scout_v2
-[submodule "scout_ros"]
-	path = scout_ros
-	url = https://github.com/agilexrobotics/scout_ros.git
-	branch = scout_v2
 [submodule "robotiq"]
 	path = robotiq
 	url = https://github.com/ros-industrial/robotiq.git
