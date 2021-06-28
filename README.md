@@ -1,6 +1,7 @@
 
 
 # joined_scout_ur5e
+*This repository is for Developing project*
 joined scout2.0 mobile platform and UR5e manipulator
 
 
