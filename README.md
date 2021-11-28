@@ -2,6 +2,7 @@
 
 # joined_scout_ur5e
 *This repository is for Developing project*
+*So, please be aware that it DOSE NOT working properly*
 
 joined scout2.0 mobile platform and UR5e manipulator
 
